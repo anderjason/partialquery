@@ -1,20 +1,10 @@
 <h1 align="center">ComposableQuery</h1>
 
 <div align="center">
-  <strong>Make your own SQL building blocks</strong>
+  <strong>Create custom SQL building blocks</strong>
 </div>
 <div align="center">
-  A lightweight library for composing parameterized SQL queries from nested parts.
-</div>
-
-<br />
-
-<div align="center">
-  <!-- Stability -->
-  <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
-    <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square"
-      alt="API stability" />
-  </a>
+  A lightweight library for building parameterized SQL queries from modular parts
 </div>
 
 <br />
@@ -59,9 +49,9 @@ The `flatQuery` value in the example above is set to:
 
 ### Tokens
 
-Tokens can be added to a query to be replaced by parameters later. The token `$1` represents the first value in the parameters array. `$2` represents the second value, and so on.
+Tokens in your SQL query are placeholders for parameters. For instance, `$1` is replaced by the first value in the parameters array, `$2` by the second value, and so on.
 
-The query text and parameters are always kept separate, so they can be passed to the database engine separately. This is helpful for preventing SQL injection attacks.
+This separation of SQL text and parameters helps prevent SQL injection attacks.
 
 ```typescript
 import { ComposableQuery } from "@anderjason/composablequery";
@@ -92,7 +82,7 @@ const query = new ComposableQuery({
 
 ### Supported SQL
 
-ComposableQuery doesn't parse or evaluate the SQL text, so you can use any query syntax you like. It's up to you to ensure that the SQL text is valid for the database engine you're using.
+ComposableQuery doesn't validate SQL syntax, so you can use any SQL that is compatible with your database engine. Ensure your SQL is valid for the engine you are using.
 
 ### Supported parameter types
 
@@ -106,13 +96,13 @@ The following parameter types are supported:
 - `Buffer`
 - `null`
 - `undefined`
-- `ComposableQuery` (see [Composition](#composition) section)
+- `ComposableQuery` (see [Composition](#composition))
 
 ### Composition
 
-ComposableQuery objects can be composed together to create more complex queries.
+You can combine ComposableQuery objects to build more complex queries.
 
-In the example below, `selectQuery` includes a nested partial query `conditionPart`:
+For example:
 
 ```typescript
 import { ComposableQuery } from "@anderjason/composablequery";
@@ -131,23 +121,15 @@ const selectQuery = new ComposableQuery({
 });
 ```
 
-The `conditionPart` object represents only part of a full SQL statement. It can be embedded into other queries as a parameter. To do this, the `selectQuery` SQL statement has a token `$1` in it, and `conditionPart` is passed as the first parameter. Queries can be nested any number of levels deep.
+In this example, conditionPart is a subquery that is included in the main selectQuery. The selectQuery embeds conditionPart using the token $1. Queries can be nested as needed.
 
-Nested queries (like `conditionPart`) and root queries (like `selectQuery`) are the same from a technical perspective. The only difference is that in your usage, you consider one of them the query that you plan to run.
-
-ComposableQuery objects can be flattened into a single SQL string and a single parameter list using the `toFlatQuery` function on whichever query you consider the root query.
+To get a single SQL string and parameter list, use the toFlatQuery method:
 
 ```typescript
-// In this example, flatQuery is set to a plain JavaScript object
-// with two properties: sql and params
-
-// The sql property is a string containing the full SQL statement
-// The params property is an array of parameters
-
 const flatQuery = selectQuery.toFlatQuery();
 ```
 
-In the code above, the `toFlatQuery` method returns the following object, with values that are ready to be sent to a database engine:
+This method returns an object like this:
 
 ```typescript
 {
@@ -158,7 +140,7 @@ In the code above, the `toFlatQuery` method returns the following object, with v
 
 ### Executing queries
 
-To keep this library small and reusable, it's up to the user to decide how to execute the query. For example, you could use the [pg](https://www.npmjs.com/package/pg) library to execute the query:
+ComposableQuery does not handle query execution. You need to use a database client library, such as [pg](https://www.npmjs.com/package/pg), to run your query:
 
 ```typescript
 import { ComposableQuery } from "@anderjason/composablequery";
@@ -197,4 +179,4 @@ $ npm install @anderjason/composablequery
 
 ## License
 
-[MIT](https://tldrlegal.com/license/mit-license)
+[MIT License](https://tldrlegal.com/license/mit-license)
