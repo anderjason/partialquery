@@ -1,24 +1,16 @@
-<h1 align="center">ComposableQuery</h1>
+# ComposableQuery
 
-<div align="center">
-  <strong>Create custom SQL building blocks</strong>
-</div>
-<div align="center">
-  A lightweight library for building parameterized SQL queries from modular parts
-</div>
+**Create custom SQL building blocks**<br />
+A lightweight library for building parameterized SQL queries from modular parts
 
-<br />
-
-<div align="center">
-<img src="docs/images/composablequery.jpg?raw=true" alt="Project image" />
-</div>
-
-<br />
-
-## Table of Contents
-
-- [Example](#example)
 - [Installation](#installation)
+- [Example](#example)
+
+## Installation
+
+```sh
+$ npm install @anderjason/composablequery
+```
 
 ## Example
 
@@ -80,24 +72,6 @@ const query = new ComposableQuery({
 });
 ```
 
-### Supported SQL
-
-ComposableQuery doesn't validate SQL syntax, so you can use any SQL that is compatible with your database engine. Ensure your SQL is valid for the engine you are using.
-
-### Supported parameter types
-
-The following parameter types are supported:
-
-- `string`
-- `string[]`
-- `number`
-- `number[]`
-- `boolean`
-- `Buffer`
-- `null`
-- `undefined`
-- `ComposableQuery` (see [Composition](#composition))
-
 ### Composition
 
 You can combine ComposableQuery objects to build more complex queries.
@@ -138,6 +112,11 @@ This method returns an object like this:
 }
 ```
 
+### Supported SQL
+
+ComposableQuery doesn't validate SQL syntax, so you can use any SQL that is compatible with your database engine. Ensure your SQL is valid for the engine you are using.
+
+
 ### Executing queries
 
 ComposableQuery does not handle query execution. You need to use a database client library, such as [pg](https://www.npmjs.com/package/pg), to run your query:
@@ -171,11 +150,19 @@ pool.query(flatQuery.sql, flatQuery.params, (err, res) => {
 });
 ```
 
-## Installation
+### Supported parameter types
 
-```sh
-$ npm install @anderjason/composablequery
-```
+The following parameter types are supported:
+
+- `string`
+- `string[]`
+- `number`
+- `number[]`
+- `boolean`
+- `Buffer`
+- `null`
+- `undefined`
+- `ComposableQuery` (see [Composition](#composition))
 
 ## License
 
