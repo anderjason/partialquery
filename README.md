@@ -94,7 +94,7 @@ const selectQuery = new ComposableQuery({
 });
 ```
 
-In this example, `conditionPart` is a subquery that is included in the main `selectQuery`. The `selectQuery` embeds `conditionPart` using the token `$1`. Queries can be nested as needed.
+In this example, `conditionPart` is a subquery that is included in the main `selectQuery`. The `selectQuery` embeds `conditionPart` using the token `$1`. These composable query parts can be nested multiple levels deep.
 
 To get a single SQL string and parameter list, use the `toFlatQuery` method:
 
