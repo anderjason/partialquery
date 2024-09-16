@@ -88,16 +88,15 @@ const conditionPart = new ComposableQuery({
   params: ['California', 'Post Office']
 });
 
-// selectQuery is the root query
 const selectQuery = new ComposableQuery({
   sql: `SELECT * FROM locations WHERE $1 AND is_deleted = $2`
   params: [conditionPart, false]
 });
 ```
 
-In this example, conditionPart is a subquery that is included in the main selectQuery. The selectQuery embeds conditionPart using the token $1. Queries can be nested as needed.
+In this example, `conditionPart` is a subquery that is included in the main `selectQuery`. The `selectQuery` embeds `conditionPart` using the token `$1`. Queries can be nested as needed.
 
-To get a single SQL string and parameter list, use the toFlatQuery method:
+To get a single SQL string and parameter list, use the `toFlatQuery` method:
 
 ```typescript
 const flatQuery = selectQuery.toFlatQuery();
@@ -112,14 +111,9 @@ This method returns an object like this:
 }
 ```
 
-### Supported SQL
-
-ComposableQuery doesn't validate SQL syntax, so you can use any SQL that is compatible with your database engine. Ensure your SQL is valid for the engine you are using.
-
-
 ### Executing queries
 
-ComposableQuery does not handle query execution. You need to use a database client library, such as [pg](https://www.npmjs.com/package/pg), to run your query:
+ComposableQuery doesn't validate SQL syntax or handle query execution. You need to use a database client library, such as [pg](https://www.npmjs.com/package/pg), to run your query. Ensure your SQL is valid for the engine you are using.
 
 ```typescript
 import { ComposableQuery } from "@anderjason/composablequery";
